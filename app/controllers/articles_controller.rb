@@ -4,10 +4,18 @@ class ArticlesController < ApplicationController
   end
   
   def create 
-    #render plain: params[:article].inspect 
     @article = Article.new(article_params) 
-    @article.save
-    redirect_to articles_show(@article)
+    if @article.save
+      flash[:notice] = "Article was successfully created" #To display this message, insert approppriate code in 'views/layout/application.html.erb'
+      redirect_to article_path(@article)
+      #NOTE: Flash appears for 1 redirect cycle.
+    else
+      render 'new'
+    end
+  end
+  
+  def show
+    @article = Article.find(params[:id]) 
   end
   
   private 
