@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  before_action :set_article, only: [:edit, :update, :show, :destroy]
     
   def index
     @articles = Article.all
@@ -8,8 +9,7 @@ class ArticlesController < ApplicationController
     @article = Article.new  
   end
   
-  def edit
-    @article = Article.find(params[:id]) #method for edit
+  def edit    #method for edit in 'set_article'
   end
   
   def create 
@@ -23,8 +23,7 @@ class ArticlesController < ApplicationController
     end
   end
   
-  def update
-    @article = Article.find(params[:id])    #update, finds instead of new
+  def update                                #update, finds instead of new
     if @article.update(article_params)      #update instead of save
       flash[:notice] = "Article was successfully updated"
       redirect_to article_path(@article)
@@ -34,15 +33,18 @@ class ArticlesController < ApplicationController
   end
   
   def show
-    @article = Article.find(params[:id]) 
   end
   
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
     flash[:notice] = "Article was successfully deleted"
     redirect_to articles_path
   end
+  
+  private
+    def set_article
+      @article = Article.find(params[:id])
+    end
   
   private 
     def article_params #used to whitelist submittion
