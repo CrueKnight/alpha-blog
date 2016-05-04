@@ -15,7 +15,7 @@ class ArticlesController < ApplicationController
   def create 
     @article = Article.new(article_params) 
     if @article.save
-      flash[:notice] = "Article was successfully created" #To display this message, insert approppriate code in 'views/layout/application.html.erb'
+      flash[:success] = "Article was successfully created" #To display this message, insert approppriate code in 'views/layout/application.html.erb'
       redirect_to article_path(@article)
       #NOTE: Flash appears for 1 redirect cycle.
     else
@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
   
   def update                                #update, finds instead of new
     if @article.update(article_params)      #update instead of save
-      flash[:notice] = "Article was successfully updated"
+      flash[:success] = "Article was successfully updated"
       redirect_to article_path(@article)
     else
       render 'edit'                         #edit instead of new
@@ -37,7 +37,7 @@ class ArticlesController < ApplicationController
   
   def destroy
     @article.destroy
-    flash[:notice] = "Article was successfully deleted"
+    flash[:danger] = "Article was successfully deleted"
     redirect_to articles_path
   end
   
